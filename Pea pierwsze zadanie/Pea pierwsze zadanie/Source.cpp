@@ -1,8 +1,8 @@
 #include <iostream>
+#include "Menu.h"
 
 int main()
 {
-	std::cout << "czesc" << std::endl;
-	system("pause");
+	Menu menu(); //Tworze sobie obiektklasy menu, z którego potem steruje programem
 	exit(EXIT_SUCCESS);
 }
