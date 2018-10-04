@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+
 class Graph
 {
 	int verticle; // ilosc wierzcholkow grafu
@@ -6,7 +8,8 @@ class Graph
 public:
 	Graph();
 	~Graph();
-	void createGiven();
+	void createGiven(std::string name);
 	void clear();
+	void display();
 };
 

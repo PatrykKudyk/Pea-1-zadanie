@@ -8,5 +8,6 @@ public:
 	Menu();
 	~Menu();
 	void mainMenu(); //menu g³ówne programu
+	std::string fileName();
 };
 

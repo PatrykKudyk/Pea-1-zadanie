@@ -7,6 +7,7 @@ using namespace std;
 
 Graph::Graph()
 {
+	verticle = 0;
 }
 
 
@@ -15,17 +16,18 @@ Graph::~Graph()
 	clear();
 }
 
-void Graph::createGiven()
+void Graph::createGiven(string name)
 {
 	ifstream plik; //tworze plik
-	int licznik = 0, wp, wk, waga;
+	int counter = 0; // inicjuje licznik, który u³atwi wpisywanie danych (bêdzie liczy³ wiersze)
 	if (verticle != 0) //sprawdzam, czy istnieje ju¿ jakiœ graf. Jeœli tak to go usuwam i dopiero wczytuje nowy
 	{
 		clear(); //czyszczenie grafu
 		short int **temp1 = nullptr; // tworze wskaznik na nowy graf
 		graph = temp1; //przypisuje wskaznik 
 	}
-	plik.open("podane.txt", ios::in); //otwieram plik
+	name = name + ".txt";
+	plik.open(name, ios::in); //otwieram plik
 	plik >> verticle;
 	graph = new short int *[verticle];	//tworze tablice wskaznikow, ktorej wielkosc jest rowna ilosci wierzcholkow
 	for (int i = 0; i < verticle; i++)	//tworze wiersze w tablicy wskaznikow, wiersze dlugosci odpowiadajacej ilosci wierzcholkow
@@ -37,15 +39,14 @@ void Graph::createGiven()
 	
 	while (!plik.eof())
 	{
-		plik >> wp >> wk >> waga;
-		grafS[wp][licznik] = 1;
-		grafS[wk][licznik] = -1;
-		grafNS[wp][licznik] = 1;
-		grafNS[wk][licznik] = 1;
-		wagi[licznik] = waga;
-		licznik++;
+		for(int i = 0; i < verticle; i++)
+			plik >> graph[counter][i];	// w pêtli przypisuje wartoœci po kolei do wiersza oznaczonego jako "counter"
+		
+		counter++;	//zwiêkszam numer wiersza
+		if (counter >= verticle)  //warunek przekroczenia ilosci danych, jesli plik z danymi by³by Ÿle podany
+			break;
 	}
-	plik.close();
+	plik.close();	 // zamykam plik
 }
 
 void Graph::clear()
@@ -53,4 +54,39 @@ void Graph::clear()
 	for (int i = 0; i < verticle; i++)
 		delete[] graph[i];
 	delete[] graph;
+}
+
+void Graph::display()
+{
+	if (verticle > 0) {
+		cout << "Wczytany graf posiada " << verticle << " wierzcholkow, a jego reprezentacja jest nastepujaca:" << endl << endl;
+
+		for (int i = 0; i < verticle; i++)
+		{
+			if (i == 0)
+			{
+				cout << "\t";
+				for (int m = 0; m < verticle; m++)
+					cout << m << "\t";
+				cout << endl;
+				for (int ilosc = 0; ilosc < verticle * 8; ilosc++)	//wypisanie wiersza skladajacego sie z ciagu: "----(...)--"
+					cout << "-";
+				cout << endl;
+			}
+			cout << i << "\t";
+			for (int j = 0; j < verticle; j++)
+				cout << graph[i][j] << "\t";					//wypisywanie wartosci z macierzy
+
+			cout << endl;
+			if (i % 2 == 1)
+				for (int ilosc = 0; ilosc < verticle * 8; ilosc++)		//co drugi wiersz oddzielony jest ciagiem: "----(...)--"
+					cout << "-";
+			else
+				for (int ilosc = 0; ilosc < verticle * 8; ilosc++)	//co drugi wiersz oddzielony jest ciagiem: "~~~~(...)~~"
+					cout << "~";
+			cout << endl;
+		}
+	}
+	else
+		cout << "Graf nie posiada wierzcholkow, wiec nie mozna go wyswietlic." << endl;
 }

@@ -3,6 +3,7 @@
 
 int main()
 {
-	Menu menu(); //Tworze sobie obiektklasy menu, z którego potem steruje programem
+	Menu menu; //Tworze sobie obiektklasy menu, z którego potem steruje programem
+	menu.mainMenu();
 	exit(EXIT_SUCCESS);
 }
