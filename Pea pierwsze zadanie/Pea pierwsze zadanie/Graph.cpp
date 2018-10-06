@@ -49,6 +49,11 @@ void Graph::createGiven(string name)
 	plik.close();	 // zamykam plik
 }
 
+int* Graph::bruteForce()
+{
+
+}
+
 void Graph::clear()
 {
 	for (int i = 0; i < verticle; i++)

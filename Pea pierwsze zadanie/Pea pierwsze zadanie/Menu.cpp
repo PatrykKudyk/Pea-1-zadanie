@@ -17,7 +17,6 @@ void Menu::mainMenu()
 {
 	bool progWork = true;	//zmienna logiczna, ktora odpowiada za dzialanie badz wylaczenie programu
 	int choise;	//numer, ktory wprowadza uzytkownik w momencie wyboru
-	string name; // nazwa pliku do wczytania
 	do {
 		system("cls");
 		cout << "[1] Wczytaj dane z pliku." << endl
@@ -31,8 +30,7 @@ void Menu::mainMenu()
 		{
 		case 1:
 			system("cls");
-			name = fileName();
-			graph.createGiven(name); //wczytanie grafu
+			graph.createGiven(fileName()); //wczytanie grafu, a przy okazji wprowadzenie nazwy pliku
 			system("cls");
 			graph.display();	//wyswietlenie grafu
 			cin.get();			//zabezpieczenie przez zniknieciem danych z konsoli
@@ -61,8 +59,8 @@ void Menu::mainMenu()
 
 string Menu::fileName()
 {
-	string name;
+	string name;	//tworzy zmienna klasy string
 	cout << "Podaj nazwe pliku : ";
-	cin >> name;
-	return name;
+	cin >> name;	//pobiera nazwe od uzytkownika
+	return name;	//zwraca podana przez uzytkownika nazwe
 }
