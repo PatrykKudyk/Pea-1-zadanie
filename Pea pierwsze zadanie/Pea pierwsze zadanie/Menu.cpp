@@ -30,7 +30,7 @@ void Menu::mainMenu()
 		{
 		case 1:
 			system("cls");
-			graph.createGiven(fileName()); //wczytanie grafu, a przy okazji wprowadzenie nazwy pliku
+			graph.createGiven(getFileName()); //wczytanie grafu, a przy okazji wprowadzenie nazwy pliku
 			system("cls");
 			graph.display();	//wyswietlenie grafu
 			cin.get();			//zabezpieczenie przez zniknieciem danych z konsoli
@@ -57,7 +57,7 @@ void Menu::mainMenu()
 	} while (progWork);
 }
 
-string Menu::fileName()
+string Menu::getFileName()
 {
 	string name;	//tworzy zmienna klasy string
 	cout << "Podaj nazwe pliku : ";
