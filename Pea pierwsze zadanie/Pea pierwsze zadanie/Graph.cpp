@@ -74,7 +74,7 @@ int* Graph::bruteForceFinder(int* vertQued, bool* vertUsed, int vert)
 	{
 		if(i != vert)
 		{
-			
+			graph[vert][i];
 		}
 	}
 	return vertQued;
