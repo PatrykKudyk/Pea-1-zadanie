@@ -18,30 +18,36 @@ void Graph::createGiven(string name)
 {
 	ifstream plik; //tworze plik
 	int counter = 0; // inicjuje licznik, który u³atwi wpisywanie danych (bêdzie liczy³ wiersze)
-	if (verticle != 0) //sprawdzam, czy istnieje ju¿ jakiœ graf. Jeœli tak to go usuwam i dopiero wczytuje nowy
-	{
-		clear(); //czyszczenie grafu
-		short int **temp1 = nullptr; // tworze wskaznik na nowy graf
-		graph = temp1; //przypisuje wskaznik 
-	}
 	plik.open(name, ios::in); //otwieram plik
-	plik >> verticle;
-	graph = new short int *[verticle];	//tworze tablice wskaznikow, ktorej wielkosc jest rowna ilosci wierzcholkow
-	for (int i = 0; i < verticle; i++)	//tworze wiersze w tablicy wskaznikow, wiersze dlugosci odpowiadajacej ilosci wierzcholkow
-		graph[i] = new short int[verticle];
-	
-	for (int i = 0; i < verticle; i++)
-		for (int j = 0; j < verticle; j++)
-			graph[i][j] = 0;		//przypisuje wszystkim komorkom wartosc poczatkowa 0
-	
-	while (!plik.eof())
+	if (plik.good() == true)	//sprawdzam, czy plik otworzyl sie poprawnie
 	{
-		for(int i = 0; i < verticle; i++)
-			plik >> graph[counter][i];	// w pêtli przypisuje wartoœci po kolei do wiersza oznaczonego jako "counter"
-		
-		counter++;	//zwiêkszam numer wiersza
-		if (counter >= verticle)  //warunek przekroczenia ilosci danych, jesli plik z danymi by³by Ÿle podany
-			break;
+		graphReset(); //resetuje graf
+		plik >> verticle;
+		graph = new short int *[verticle];	//tworze tablice wskaznikow, ktorej wielkosc jest rowna ilosci wierzcholkow
+		for (int i = 0; i < verticle; i++)	//tworze wiersze w tablicy wskaznikow, wiersze dlugosci odpowiadajacej ilosci wierzcholkow
+			graph[i] = new short int[verticle];
+
+		for (int i = 0; i < verticle; i++)
+			for (int j = 0; j < verticle; j++)
+				graph[i][j] = 0;		//przypisuje wszystkim komorkom wartosc poczatkowa 0
+
+		while (!plik.eof())
+		{
+			for (int i = 0; i < verticle; i++)
+				plik >> graph[counter][i];	// w pêtli przypisuje wartoœci po kolei do wiersza oznaczonego jako "counter"
+
+			counter++;	//zwiêkszam numer wiersza
+			if (counter >= verticle)  //warunek przekroczenia ilosci danych, jesli plik z danymi by³by Ÿle podany
+				break;
+		}
+	}
+	else
+	{
+		system("cls");
+		cout << "Nie udalo sie otworzyc pliku." << endl;
+		cin.get();
+		cin.get();
+		graphReset(); //resetuje graf
 	}
 	plik.close();	 // zamykam plik
 }
@@ -50,7 +56,7 @@ int* Graph::bruteForce()
 {
 	bool *vertUsed = new bool[verticle]; //tablica odwiedzonych wierzcholkow   -   true(odwiedzony)     false(nieodwiedzony)
 	int *vertQued = new int[verticle];   //tablica kojenych wierzcholkow w cyklu hamiltona
-	
+
 	for (int i = 0; i < verticle; i++)
 		vertUsed[i] = false;			//ustawiam wszystkie wierzcholki jako nieodwiedzone
 
@@ -65,6 +71,17 @@ void Graph::clear()
 	for (int i = 0; i < verticle; i++)
 		delete[] graph[i];
 	delete[] graph;
+}
+
+void Graph::graphReset()
+{
+	if (verticle != 0) //sprawdzam, czy istnieje ju¿ jakiœ graf. Jeœli tak to go usuwam i dopiero wczytuje nowy
+	{
+		clear(); //czyszczenie grafu
+		short int **temp1 = nullptr; // tworze wskaznik na nowy graf
+		graph = temp1; //przypisuje wskaznik 
+		verticle = 0; //zeruje liczbe wierzcholkow
+	}
 }
 
 void Graph::display()

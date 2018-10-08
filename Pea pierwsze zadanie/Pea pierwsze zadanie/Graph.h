@@ -11,6 +11,7 @@ public:
 	void createGiven(std::string name);
 	int* bruteForce();
 	void clear();
+	void graphReset();
 	void display();
 };
 
