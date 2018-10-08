@@ -52,8 +52,9 @@ void Graph::createGiven(string name)
 	plik.close();	 // zamykam plik
 }
 
-int* Graph::bruteForce()
+int* Graph::bruteForce(int vert)
 {
+
 	bool *vertUsed = new bool[verticle]; //tablica odwiedzonych wierzcholkow   -   true(odwiedzony)     false(nieodwiedzony)
 	int *vertQued = new int[verticle];   //tablica kojenych wierzcholkow w cyklu hamiltona
 
@@ -118,4 +119,9 @@ void Graph::display()
 	}
 	else
 		cout << "Graf nie posiada wierzcholkow, wiec nie mozna go wyswietlic." << endl;
+}
+
+int Graph::getVerticle()
+{
+	return verticle;
 }

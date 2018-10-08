@@ -9,9 +9,10 @@ public:
 	Graph();
 	~Graph();
 	void createGiven(std::string name);
-	int* bruteForce();
+	int* bruteForce(int vert);
 	void clear();
 	void graphReset();
 	void display();
+	int getVerticle(); //pobiera ilosc wierzcholkow
 };
 

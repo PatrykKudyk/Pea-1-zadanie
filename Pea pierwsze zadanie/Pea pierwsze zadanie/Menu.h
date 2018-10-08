@@ -9,5 +9,7 @@ public:
 	~Menu();
 	void mainMenu(); //menu g³ówne programu
 	std::string getFileName();
+	int getNumber();
+	int getNumber(int vert); // pobiera numer, przeciazenie
 };
 

@@ -21,7 +21,7 @@ void Menu::mainMenu()
 		system("cls");
 		cout << "[1] Wczytaj dane z pliku." << endl
 			<< "[2] Wyswietl dane." << endl
-			<< "[3] " << endl
+			<< "[3] Znalezc najkrotszy cykl metoda BruteForce." << endl
 			<< "[4] " << endl
 			<< "[5] " << endl
 			<< "[6] Wyjdz z programu." << endl;
@@ -43,6 +43,10 @@ void Menu::mainMenu()
 			cin.get();
 			break;
 		case 3:
+			system("cls");
+			//graph.bruteForce(getNumber());
+			cin.get();
+			cin.get();
 			break;
 		case 4:
 			break;
@@ -64,4 +68,30 @@ string Menu::getFileName()
 	cin >> name;	//pobiera nazwe od uzytkownika
 	name = name + ".txt"; //zmieniam nazwe pliku na taka obslugiwana przez program
 	return name;	//zwraca podana przez uzytkownika nazwe
+}
+
+int Menu::getNumber()
+{
+	int choise;
+	cout << "Z ktorego wierzcholka chcesz wyruszyc?" << endl
+		<< "[1] Z wybranego." << endl
+		<< "[2] Z losowego." << endl;
+	cin >> choise;
+	switch(choise)
+	{
+	case 1:
+		return getNumber(graph.getVerticle());
+	case 2:
+		return (rand() % graph.getVerticle());
+	default:
+		break;
+	}
+}
+
+int Menu::getNumber(int vert)
+{
+	int number;
+	cout << endl << "Podaj wierzcholek startowy z zakresu: [0, " << vert - 1 << "]" << endl;
+	cin >> number;
+	return number;
 }
