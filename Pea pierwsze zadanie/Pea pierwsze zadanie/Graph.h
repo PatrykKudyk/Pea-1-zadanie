@@ -10,6 +10,7 @@ public:
 	~Graph();
 	void createGiven(std::string name);
 	int* bruteForce(int vert);
+	int* bruteForceFinder(int * vertQued, bool * vertUsed, int vert);
 	void clear();
 	void graphReset();
 	void display();

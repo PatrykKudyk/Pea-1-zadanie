@@ -56,15 +56,27 @@ int* Graph::bruteForce(int vert)
 {
 
 	bool *vertUsed = new bool[verticle]; //tablica odwiedzonych wierzcholkow   -   true(odwiedzony)     false(nieodwiedzony)
-	int *vertQued = new int[verticle];   //tablica kojenych wierzcholkow w cyklu hamiltona
+	int *vertQued = new int[1];   //tablica kojenych wierzcholkow w cyklu hamiltona
 
 	for (int i = 0; i < verticle; i++)
 		vertUsed[i] = false;			//ustawiam wszystkie wierzcholki jako nieodwiedzone
-
-
+	vertQued[0] = vert;
+	bruteForceFinder(vertQued, vertUsed, vert);
 
 	delete[] vertUsed;
+	delete[] vertQued;
 	return vertQued;
+}
+
+int* Graph::bruteForceFinder(int* vertQued, bool* vertUsed, int vert)
+{
+	for(int i = 0; i < verticle; i++)
+	{
+		if(i != vert)
+		{
+			
+		}
+	}
 }
 
 void Graph::clear()
