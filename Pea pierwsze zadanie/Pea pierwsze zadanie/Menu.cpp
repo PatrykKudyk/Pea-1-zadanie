@@ -17,7 +17,7 @@ void Menu::mainMenu()
 {
 	bool progWork = true;	//zmienna logiczna, ktora odpowiada za dzialanie badz wylaczenie programu
 	int choise;	//numer, ktory wprowadza uzytkownik w momencie wyboru
-	int *path;
+	int *path = nullptr;
 	do {
 		system("cls");
 		cout << "[1] Wczytaj dane z pliku." << endl
@@ -88,6 +88,7 @@ int Menu::getNumber()
 	default:
 		break;
 	}
+	return 0;
 }
 
 int Menu::getNumber(int vert)
