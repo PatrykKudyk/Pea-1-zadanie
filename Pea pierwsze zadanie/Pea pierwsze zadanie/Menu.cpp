@@ -62,5 +62,6 @@ string Menu::fileName()
 	string name;	//tworzy zmienna klasy string
 	cout << "Podaj nazwe pliku : ";
 	cin >> name;	//pobiera nazwe od uzytkownika
+	name = name + ".txt"; //zmieniam nazwe pliku na taka obslugiwana przez program
 	return name;	//zwraca podana przez uzytkownika nazwe
 }

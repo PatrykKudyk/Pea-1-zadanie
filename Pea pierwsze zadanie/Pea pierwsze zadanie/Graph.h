@@ -9,6 +9,7 @@ public:
 	Graph();
 	~Graph();
 	void createGiven(std::string name);
+	int* bruteForce();
 	void clear();
 	void display();
 };

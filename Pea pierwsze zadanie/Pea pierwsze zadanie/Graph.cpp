@@ -4,12 +4,10 @@
 
 using namespace std;
 
-
 Graph::Graph()
 {
 	verticle = 0;
 }
-
 
 Graph::~Graph()
 {
@@ -26,7 +24,6 @@ void Graph::createGiven(string name)
 		short int **temp1 = nullptr; // tworze wskaznik na nowy graf
 		graph = temp1; //przypisuje wskaznik 
 	}
-	name = name + ".txt";
 	plik.open(name, ios::in); //otwieram plik
 	plik >> verticle;
 	graph = new short int *[verticle];	//tworze tablice wskaznikow, ktorej wielkosc jest rowna ilosci wierzcholkow
@@ -51,7 +48,16 @@ void Graph::createGiven(string name)
 
 int* Graph::bruteForce()
 {
+	bool *vertUsed = new bool[verticle]; //tablica odwiedzonych wierzcholkow   -   true(odwiedzony)     false(nieodwiedzony)
+	int *vertQued = new int[verticle];   //tablica kojenych wierzcholkow w cyklu hamiltona
+	
+	for (int i = 0; i < verticle; i++)
+		vertUsed[i] = false;			//ustawiam wszystkie wierzcholki jako nieodwiedzone
 
+
+
+	delete[] vertUsed;
+	return vertQued;
 }
 
 void Graph::clear()
