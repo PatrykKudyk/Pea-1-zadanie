@@ -45,7 +45,7 @@ void Menu::mainMenu()
 			break;
 		case 3:
 			system("cls");
-			path = graph.bruteForce(getNumber());
+			//path = graph.bruteForce(getNumber());
 			cin.get();
 			cin.get();
 			break;

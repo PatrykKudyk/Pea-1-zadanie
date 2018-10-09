@@ -63,8 +63,8 @@ int* Graph::bruteForce(int vert)
 	vertQued[0] = vert;
 	path = bruteForceFinder(vertQued, vertUsed, vert);
 
-	delete[] vertUsed;
-	delete[] vertQued;
+	delete[] vertUsed;	//usuwanie tablicy odwiedzonych wierzcholkow
+	delete[] vertQued;	//usuwanie tablicy z kolejnymi wierzcholkami
 	return path;
 }
 
@@ -138,3 +138,12 @@ int Graph::getVerticle()
 {
 	return verticle;
 }
+
+
+//NEXTPERMUTATION -  STL'owe
+//do B&B wziac sobie najlepiej best first albo wg³¹b przeszukiwanie grafu
+
+
+//przeszukiwanie grafu w g³¹b i potem obliczanie wag i jezeli najlepsza/najszybsza droga to wynik ustawiamy jako najlepszy
+//i potem po wszystkim go wyswietlamy
+//jakies inorder czy cos
