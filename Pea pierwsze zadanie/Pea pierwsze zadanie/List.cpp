@@ -54,6 +54,11 @@ Node* List::getHead()
 	return head;
 }
 
+int List::getSize()
+{
+	return size;
+}
+
 List::List()
 {
 	head = nullptr;

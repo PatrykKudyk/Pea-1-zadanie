@@ -12,6 +12,7 @@ Graph::Graph()
 Graph::~Graph()
 {
 	clear();
+	verticleList.clearList();
 }
 
 void Graph::createGiven(string name)
@@ -52,9 +53,42 @@ void Graph::createGiven(string name)
 	plik.close();	 // zamykam plik
 }
 
-int* Graph::bruteForce(int vert)
+void Graph::bruteForce(int vert)
 {
+	startVert = vert;
+	bool *visitedVert = new bool[verticle];
+	for (int i = 0; i < verticle; i++)
+		visitedVert[i] = false;
+	hamilton(startVert, visitedVert, 0, INT32_MAX);
+	delete[] visitedVert;
+}
 
+void Graph::hamilton(int vert, bool * &visited, int cost, int costMin)
+{
+	verticleList.push(vert);
+	hamiltonCycle.push(vert);
+	bool cycleFound;
+	if(verticleList.getSize() < verticle)
+	{
+		visited[vert] = true;
+		for(int i = 0; i < verticle; i++)
+			if (i != vert)
+				if (!visited[i])
+				{
+					hamilton(i, visited, cost, costMin);
+					cost += graph[vert][i];
+				}
+		visited[vert] = false;
+	}
+	else
+	{		
+		cost += graph[vert][startVert];
+		if (cost < costMin)
+			costMin = cost;
+		else
+			hamiltonCycle.clearList();
+	}
+	verticleList.pull();
 }
 
 
@@ -110,6 +144,12 @@ void Graph::display()
 	}
 	else
 		cout << "Graf nie posiada wierzcholkow, wiec nie mozna go wyswietlic." << endl;
+}
+
+void Graph::displayHamilton()
+{
+	if()
+	cout << "Minimalny koszt hamiltona"
 }
 
 int Graph::getVerticle()

@@ -15,6 +15,7 @@ public:
 	void pull();
 	void clearList();
 	Node* getHead();
+	int getSize();
 	List();
 	~List();
 };
