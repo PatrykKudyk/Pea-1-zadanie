@@ -55,30 +55,8 @@ void Graph::createGiven(string name)
 int* Graph::bruteForce(int vert)
 {
 
-	bool *vertUsed = new bool[verticle]; //tablica odwiedzonych wierzcholkow   -   true(odwiedzony)     false(nieodwiedzony)
-	int *vertQued = new int[1];   //tablica kojenych wierzcholkow w cyklu hamiltona
-	int *path;
-	for (int i = 0; i < verticle; i++)
-		vertUsed[i] = false;			//ustawiam wszystkie wierzcholki jako nieodwiedzone
-	vertQued[0] = vert;
-	path = bruteForceFinder(vertQued, vertUsed, vert);
-
-	delete[] vertUsed;	//usuwanie tablicy odwiedzonych wierzcholkow
-	delete[] vertQued;	//usuwanie tablicy z kolejnymi wierzcholkami
-	return path;
 }
 
-int* Graph::bruteForceFinder(int* vertQued, bool* vertUsed, int vert)
-{
-	for(int i = 0; i < verticle; i++)
-	{
-		if(i != vert)
-		{
-			graph[vert][i];
-		}
-	}
-	return vertQued;
-}
 
 void Graph::clear()
 {
