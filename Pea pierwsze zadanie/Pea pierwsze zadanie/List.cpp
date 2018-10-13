@@ -25,12 +25,9 @@ void List::pull()
 		p = head;
 		if (p->next != nullptr)
 		{
-			p->next = head;
-			free(p);
-			size--;
+			head = p->next;
+			delete p;
 		}
-		else
-			free(p);
 		size--;
 	}
 }

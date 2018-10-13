@@ -17,7 +17,6 @@ void Menu::mainMenu()
 {
 	bool progWork = true;	//zmienna logiczna, ktora odpowiada za dzialanie badz wylaczenie programu
 	int choise;	//numer, ktory wprowadza uzytkownik w momencie wyboru
-	int *path = nullptr;
 	do {
 		system("cls");
 		cout << "[1] Wczytaj dane z pliku." << endl
@@ -45,7 +44,8 @@ void Menu::mainMenu()
 			break;
 		case 3:
 			system("cls");
-			//path = graph.bruteForce(getNumber());
+			graph.bruteForce(getNumber());
+			graph.displayHamilton();
 			cin.get();
 			cin.get();
 			break;
@@ -60,7 +60,6 @@ void Menu::mainMenu()
 			break;
 		}
 	} while (progWork);
-	delete path;
 }
 
 string Menu::getFileName()

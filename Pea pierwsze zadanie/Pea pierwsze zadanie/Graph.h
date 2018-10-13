@@ -8,13 +8,14 @@ class Graph
 	short int **graph; //wskaünik na tablice wskaünikÛw
 	List verticleList; //stos do obs≥ugi bruteForce'a
 	List hamiltonCycle;
+	int costMin;
 	int startVert;
 public:
 	Graph();
 	~Graph();
 	void createGiven(std::string name);
 	void bruteForce(int vert);
-	void hamilton(int vert, bool * &visited, int cost, int costMin);
+	void hamilton(int vert, bool * &visited, int cost);
 	void clear();
 	void graphReset();
 	void display();

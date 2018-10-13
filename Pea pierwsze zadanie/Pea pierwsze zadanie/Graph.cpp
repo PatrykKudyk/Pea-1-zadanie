@@ -56,18 +56,18 @@ void Graph::createGiven(string name)
 void Graph::bruteForce(int vert)
 {
 	startVert = vert;
+	costMin = INT32_MAX;
 	bool *visitedVert = new bool[verticle];
 	for (int i = 0; i < verticle; i++)
 		visitedVert[i] = false;
-	hamilton(startVert, visitedVert, 0, INT32_MAX);
+	hamilton(startVert, visitedVert, 0);
 	delete[] visitedVert;
 }
 
-void Graph::hamilton(int vert, bool * &visited, int cost, int costMin)
+void Graph::hamilton(int vert, bool * &visited, int cost)
 {
 	verticleList.push(vert);
-	hamiltonCycle.push(vert);
-	bool cycleFound;
+	
 	if(verticleList.getSize() < verticle)
 	{
 		visited[vert] = true;
@@ -75,11 +75,11 @@ void Graph::hamilton(int vert, bool * &visited, int cost, int costMin)
 			if (i != vert)
 				if (!visited[i])
 				{
-					hamilton(i, visited, cost, costMin);
 					cost += graph[vert][i];
+					hamilton(i, visited, cost);
 				}
 		visited[vert] = false;
-	}
+	} 
 	else
 	{		
 		cost += graph[vert][startVert];
@@ -148,8 +148,15 @@ void Graph::display()
 
 void Graph::displayHamilton()
 {
-	if()
-	cout << "Minimalny koszt hamiltona"
+	if(verticle != 0)
+	{
+		cout << "Minimalny koszt hamiltona dla grafu to :" << endl;
+	//	for(Node *p = hamiltonCycle.getHead(); p == nullptr; p = p->next)
+	//		cout << hamiltonCycle.getHead()->data << "\t";
+		cout << endl << endl << "Waga tego cyklu to :" << costMin << endl;
+	}
+	else
+		cout << "Graf nie posiada wierzcholkow! Nie posiada tez cyklu hamiltona.";
 }
 
 int Graph::getVerticle()
