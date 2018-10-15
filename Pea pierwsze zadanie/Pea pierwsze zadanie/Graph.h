@@ -1,6 +1,11 @@
 #pragma once
-#include <string>
-#include "List.h"
+#include <vector>
+
+struct brtForce	//tworze strukture do przechowywania wynikow dzialania metody bruteForce
+{
+	std::vector<int> path;
+	int pathCost;
+};
 
 class Graph
 {
@@ -10,11 +15,11 @@ public:
 	Graph();
 	~Graph();
 	void createGiven(std::string name);
-	int bruteForce(int startVert);
+	brtForce bruteForce(int startVert);
 	void clear();
 	void graphReset();
 	void display();
-	void displayHamilton(int cost);
+	void displayHamilton(brtForce result);
 	int getVerticle(); //pobiera ilosc wierzcholkow
 };
 

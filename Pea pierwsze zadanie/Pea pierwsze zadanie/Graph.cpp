@@ -54,29 +54,40 @@ void Graph::createGiven(string name)
 	plik.close();	 // zamykam plik
 }
 
-int Graph::bruteForce(int startVert)
+brtForce Graph::bruteForce(int startVert)
 {
+	brtForce result;	//
+	result.pathCost = INT_MAX;
 	vector<int> vertex;
 	for (int i = 0; i < verticle; i++)
 		if (i != startVert)
 			vertex.push_back(i);
-
-	int pathMin = INT_MAX;
+	vector<int> path;
 	do
 	{
+		path.push_back(startVert);
 		int currentPathWeight = 0;
 		int k = startVert;
 		for(int i = 0; i < vertex.size(); i++)
 		{
 			currentPathWeight += graph[k][vertex[i]];
 			k = vertex[i];
+			path.push_back(k);
 		}
 		currentPathWeight += graph[k][startVert];
+		path.push_back(startVert);
+		if (currentPathWeight < result.pathCost)
+		{
+			result.pathCost = currentPathWeight;
+			result.path = path;
+		}
+		else
+			path.clear();
 
-		pathMin = min(pathMin, currentPathWeight);
 	} while (next_permutation(vertex.begin(), vertex.end()));
 
-	return pathMin;
+
+	return result;
 }
 
 void Graph::clear()
@@ -133,14 +144,18 @@ void Graph::display()
 		cout << "Graf nie posiada wierzcholkow, wiec nie mozna go wyswietlic." << endl;
 }
 
-void Graph::displayHamilton(int cost)
+void Graph::displayHamilton(brtForce result)
 {
 	if(verticle != 0)
 	{
 		cout << "Minimalny koszt hamiltona dla grafu to :" << endl;
-	//	for(Node *p = hamiltonCycle.getHead(); p == nullptr; p = p->next)
-	//		cout << hamiltonCycle.getHead()->data << "\t";
-		cout << endl << endl << "Waga tego cyklu to : " << cost << endl;
+		for (int i = 0; i < result.path.size(); i++)
+		{
+			if (i != 0)
+				cout << " - ";
+			cout << result.path[i];
+		}
+		cout << endl << endl << "Waga tego cyklu to : " << result.pathCost << endl;
 	}
 	else
 		cout << "Graf nie posiada wierzcholkow! Nie posiada tez cyklu hamiltona.";
