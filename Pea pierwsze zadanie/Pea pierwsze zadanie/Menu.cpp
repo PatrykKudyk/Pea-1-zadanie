@@ -44,8 +44,7 @@ void Menu::mainMenu()
 			break;
 		case 3:
 			system("cls");
-			graph.bruteForce(getNumber());
-			graph.displayHamilton();
+			graph.displayHamilton(graph.bruteForce(getNumber()));
 			cin.get();
 			cin.get();
 			break;

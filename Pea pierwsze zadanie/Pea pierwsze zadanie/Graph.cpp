@@ -1,6 +1,8 @@
 #include "Graph.h"
 #include <iostream>
 #include <fstream> //biblioteka do "obs³ugi" plików
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -12,7 +14,6 @@ Graph::Graph()
 Graph::~Graph()
 {
 	clear();
-	verticleList.clearList();
 }
 
 void Graph::createGiven(string name)
@@ -53,44 +54,30 @@ void Graph::createGiven(string name)
 	plik.close();	 // zamykam plik
 }
 
-void Graph::bruteForce(int vert)
+int Graph::bruteForce(int startVert)
 {
-	startVert = vert;
-	costMin = INT32_MAX;
-	bool *visitedVert = new bool[verticle];
+	vector<int> vertex;
 	for (int i = 0; i < verticle; i++)
-		visitedVert[i] = false;
-	hamilton(startVert, visitedVert, 0);
-	delete[] visitedVert;
-}
+		if (i != startVert)
+			vertex.push_back(i);
 
-void Graph::hamilton(int vert, bool * &visited, int cost)
-{
-	verticleList.push(vert);
-	
-	if(verticleList.getSize() < verticle)
+	int pathMin = INT_MAX;
+	do
 	{
-		visited[vert] = true;
-		for(int i = 0; i < verticle; i++)
-			if (i != vert)
-				if (!visited[i])
-				{
-					cost += graph[vert][i];
-					hamilton(i, visited, cost);
-				}
-		visited[vert] = false;
-	} 
-	else
-	{		
-		cost += graph[vert][startVert];
-		if (cost < costMin)
-			costMin = cost;
-		else
-			hamiltonCycle.clearList();
-	}
-	verticleList.pull();
-}
+		int currentPathWeight = 0;
+		int k = startVert;
+		for(int i = 0; i < vertex.size(); i++)
+		{
+			currentPathWeight += graph[k][vertex[i]];
+			k = vertex[i];
+		}
+		currentPathWeight += graph[k][startVert];
 
+		pathMin = min(pathMin, currentPathWeight);
+	} while (next_permutation(vertex.begin(), vertex.end()));
+
+	return pathMin;
+}
 
 void Graph::clear()
 {
@@ -146,14 +133,14 @@ void Graph::display()
 		cout << "Graf nie posiada wierzcholkow, wiec nie mozna go wyswietlic." << endl;
 }
 
-void Graph::displayHamilton()
+void Graph::displayHamilton(int cost)
 {
 	if(verticle != 0)
 	{
 		cout << "Minimalny koszt hamiltona dla grafu to :" << endl;
 	//	for(Node *p = hamiltonCycle.getHead(); p == nullptr; p = p->next)
 	//		cout << hamiltonCycle.getHead()->data << "\t";
-		cout << endl << endl << "Waga tego cyklu to :" << costMin << endl;
+		cout << endl << endl << "Waga tego cyklu to : " << cost << endl;
 	}
 	else
 		cout << "Graf nie posiada wierzcholkow! Nie posiada tez cyklu hamiltona.";
