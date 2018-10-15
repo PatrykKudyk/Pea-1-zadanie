@@ -3,13 +3,13 @@
 
 struct brtForce	//tworze strukture do przechowywania wynikow dzialania metody bruteForce
 {
-	std::vector<int> path;
-	int pathCost;
+	std::vector<int> path;	//vector, który przechowuje kolejne wierzcholki po ktorych przechodzi algorytm
+	int pathCost;	//zmienna, ktora przechowuje najnizszy koszt
 };
 
 class Graph
 {
-	int verticle; // ilosc wierzcholkow grafu
+	int vertices; // ilosc wierzcholkow grafu
 	short int **graph; //wskaŸnik na tablice wskaŸników
 public:
 	Graph();
