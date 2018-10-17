@@ -54,9 +54,9 @@ void Graph::createGiven(string name)
 	plik.close();	 // zamykam plik
 }
 
-brtForce Graph::bruteForce(int startVert)
+hamilton Graph::bruteForce(int startVert)
 {
-	brtForce result;	//tworze zmienna lokalna przy uzyciu struktury brtForce
+	hamilton result;	//tworze zmienna lokalna przy uzyciu struktury hamilton
 	result.pathCost = INT_MAX;	//ustawiam minimalny koszt przejscia na maksymalny, ktory jest dostepny w int'cie tak, aby potem mozna bylo znaleŸæ najkrotszy przez porównywanie
 	vector<int> vertex; //tworze vektor intów o nazwie vertex, w ktorym bêdê przechowywa³ wszystkie wierzcholki poza startowym
 	vector<int> path;	//tworze vektor intow o nazwie path, do przechowywania kolejnych wierzcholkow dla chwilowej sciezki
@@ -145,7 +145,7 @@ void Graph::display()
 		cout << "Graf nie posiada wierzcholkow, wiec nie mozna go wyswietlic." << endl;
 }
 
-void Graph::displayHamilton(brtForce result)
+void Graph::displayHamilton(hamilton result)
 {
 	if(vertices != 0)	//sprawdzenie czy graf nie jest pusty
 	{

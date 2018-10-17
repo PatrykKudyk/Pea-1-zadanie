@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-struct brtForce	//tworze strukture do przechowywania wynikow dzialania metody bruteForce
+struct hamilton	//tworze strukture do przechowywania wynikow algorytmów (œcie¿ka i jej koszt)
 {
 	std::vector<int> path;	//vector, który przechowuje kolejne wierzcholki po ktorych przechodzi algorytm
 	int pathCost;	//zmienna, ktora przechowuje najnizszy koszt
@@ -15,11 +15,11 @@ public:
 	Graph();
 	~Graph();
 	void createGiven(std::string name);
-	brtForce bruteForce(int startVert);
+	hamilton bruteForce(int startVert);
 	void clear();
 	void graphReset();
 	void display();
-	void displayHamilton(brtForce result);
+	void displayHamilton(hamilton result);
 	int getVerticle(); //pobiera ilosc wierzcholkow
 };
 
