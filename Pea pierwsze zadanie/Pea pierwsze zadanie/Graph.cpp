@@ -162,11 +162,15 @@ void Graph::displayHamilton(brtForce result)
 		cout << "Graf nie posiada wierzcholkow! Nie posiada tez cyklu hamiltona.";
 }
 
-int Graph::getVerticle()
+int Graph::getVertices()
 {
 	return vertices;
 }
 
+int Graph::setVertices(int vert)
+{
+	vertices = vert;
+}
 
 
 //do B&B wziac sobie najlepiej best first albo wg³¹b przeszukiwanie grafu
