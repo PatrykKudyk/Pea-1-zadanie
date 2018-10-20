@@ -1,5 +1,7 @@
 #pragma once
 #include "Graph.h"
+#include <vector>
+#include "BruteForce.h"
 
 class Menu
 {
@@ -11,5 +13,6 @@ public:
 	std::string getFileName();
 	int getNumber();
 	int getNumber(int vert); // pobiera numer, przeciazenie
+	void displayHamilton(int cost, std::vector<int> path);
 };
 

@@ -1,6 +1,8 @@
 #include "Menu.h"
 #include <iostream>
 #include <string>
+#include <vector>
+#include "BruteForce.h"
 
 using namespace std;
 
@@ -18,6 +20,7 @@ void Menu::mainMenu()
 {
 	bool progWork = true;	//zmienna logiczna, ktora odpowiada za dzialanie badz wylaczenie programu
 	int choise;	//numer, ktory wprowadza uzytkownik w momencie wyboru
+	BruteForce brute;
 	do {
 		system("cls");
 		cout << "[1] Wczytaj dane z pliku." << endl
@@ -46,7 +49,11 @@ void Menu::mainMenu()
 		case 3:
 			system("cls");
 			if (graph.getVertices() != 0)
-				graph.displayHamilton(graph.bruteForce(getNumber()));
+			{
+				brute.setGraph(graph);
+				brute.calculatingPath(getNumber());
+				displayHamilton(brute.getPathCost(), brute.getPath());
+			}
 			else
 				cout << "Graf jest pusty, nie mozna przeprowadzic wybranej operacji!" << endl;
 			cin.get();
@@ -54,12 +61,12 @@ void Menu::mainMenu()
 			break;
 		case 4:
 			system("cls");
-			if (graph.getVertices() != 0)
-				graph.displayHamilton(graph.branchAndBound(getNumber()));
+	/*	if (graph.getVertices() != 0)
+				displayHamilton(graph.branchAndBound(getNumber()));
 			else
 				cout << "Graf jest pusty, nie mozna przeprowadzic wybranej oepracji!" << endl;
 			cin.get();
-			cin.get();
+			cin.get();*/
 			break;
 		case 5:
 			break;
@@ -106,4 +113,21 @@ int Menu::getNumber(int vert)
 	cout << endl << "Podaj wierzcholek startowy z zakresu: [0, " << vert - 1 << "]" << endl;
 	cin >> number;
 	return number;
+}
+
+void Menu::displayHamilton(int cost, vector<int> path)
+{
+	if (graph.getVertices() != 0)	//sprawdzenie czy graf nie jest pusty
+	{
+		cout << "Minimalny koszt hamiltona dla grafu to :" << endl;
+		for (int i = 0; i < path.size(); i++)
+		{
+			if (i != 0)
+				cout << " - ";
+			cout << path[i];	//wypisanie kolejnych wierzcholkow przejscia
+		}
+		cout << endl << endl << "Waga tego cyklu to : " << cost << endl;	//wyswietlenie kosztu najtanszego przejscia
+	}
+	else
+		cout << "Graf nie posiada wierzcholkow! Nie posiada tez cyklu hamiltona.";
 }
