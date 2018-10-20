@@ -10,6 +10,7 @@ struct bAndB
 	short int **graph;
 	int reduction;
 	bool *visited;
+	std::vector<int> path;
 };
 
 class BranchAndBound

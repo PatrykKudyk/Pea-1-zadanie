@@ -15,12 +15,10 @@ BranchAndBound::~BranchAndBound()
 
 void BranchAndBound::calculatingPath(int startVert)
 {
-	bAndB firstReduction;
 	std::vector<bAndB> vector;
+	bAndB firstReduction = matrixStartReduction(this->graph.getGraph(), this->graph.getVertices(), startVert);
 
-	firstReduction = matrixStartReduction(this->graph.getGraph(), this->graph.getVertices(), startVert);
-
-	std::cout << "Zredukowany graf : " << std::endl;
+	/*std::cout << "Zredukowany graf : " << std::endl;
 	for(int i = 0; i < graph.getVertices(); i++)
 	{
 		for (int j = 0; j < graph.getVertices(); j++)
@@ -29,7 +27,7 @@ void BranchAndBound::calculatingPath(int startVert)
 	}
 	std::cin.get();
 	std::cin.get();
-
+	*/
 
 	vector.push_back(firstReduction);
 	bAndB temp = vector.front();
@@ -52,10 +50,9 @@ void BranchAndBound::calculatingPath(int startVert)
 				index = i;
 				minRed = vector[i].reduction;
 			}
-		
 		//---------------------------------------//
 		temp = vector[index];
-
+/*
 		std::cout << "Zredukowany graf : " << std::endl;
 		for (int i = 0; i < graph.getVertices(); i++)
 		{
@@ -63,23 +60,22 @@ void BranchAndBound::calculatingPath(int startVert)
 				std::cout << temp.graph[i][j] << "\t";
 			std::cout << std::endl;
 		}
+		std::cout << "Numer wierzcholka : " << temp.vertexNumber << std::endl
+			<< "Chwilowa redukcja : " << temp.reduction << std::endl;
 		std::cin.get();
-		std::cin.get();
+		std::cin.get();*/
 
 		pathCost = temp.reduction;
+		path = temp.path;
 		loopOn = isVisitedLeft(temp.visited, graph.getVertices());
-		//	std::sort(vector.begin(), vector.end(), compareByCost);
-		//	std::sort(vector.rbegin(), vector.rend());
 	} while (loopOn);
 
-
+	path.push_back(startVert);
 }
 
 bAndB BranchAndBound::matrixStartReduction(short** graph, int verticles, int startVert)
 {
 	bAndB result;
-	result.vertexNumber = NULL;
-
 	result.graph = copyGraph(graph, verticles);
 
 	result.reduction = 0;		//zmienna przechowujaca wartosc redukcji podstawowej
@@ -140,7 +136,7 @@ bAndB BranchAndBound::matrixStartReduction(short** graph, int verticles, int sta
 	result.visited[startVert] = true;
 
 	result.vertexNumber = startVert;
-
+	result.path.push_back(startVert);
 	return result;
 }
 
@@ -173,6 +169,8 @@ bAndB BranchAndBound::reducing(bAndB given, int startVert, int endVert, bAndB fi
 	result.visited = copyVisited(given.visited, graph.getVertices());
 	result.visited[endVert] = true;
 	result.vertexNumber = endVert;
+	result.path = given.path;
+	result.path.push_back(endVert);
 
 	for (int i = 0; i < graph.getVertices(); i++)
 	{
