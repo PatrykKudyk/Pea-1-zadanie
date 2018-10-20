@@ -3,6 +3,7 @@
 #include <fstream> //biblioteka do "obs³ugi" plików
 #include <vector>
 #include <algorithm>
+#include <queue>
 
 using namespace std;
 
@@ -61,15 +62,15 @@ hamilton Graph::bruteForce(int startVert)
 	vector<int> vertex; //tworze vektor intów o nazwie vertex, w ktorym bêdê przechowywa³ wszystkie wierzcholki poza startowym
 	vector<int> path;	//tworze vektor intow o nazwie path, do przechowywania kolejnych wierzcholkow dla chwilowej sciezki
 	for (int i = 0; i < vertices; i++)
-		if (i != startVert)	
+		if (i != startVert)
 			vertex.push_back(i);	//wrzucam do wektora wszystkie wierzcholki poza startowym, ¿eby unikn¹æ pêtli
-	
+
 	do
 	{
 		path.push_back(startVert);	//startowy wierzcholek ustawiam jako pierwszy
 		int currentPathWeight = 0;	//ustawiam poczatkowy koszt przejscia jako zero, bo dopiero startujemy
 		int k = startVert;	//tworze zmienna k, ktora bedzie wskazywala chwilowo rozpatrywany wierzcholek
-		for(int i = 0; i < vertex.size(); i++)
+		for (int i = 0; i < vertex.size(); i++)
 		{
 			currentPathWeight += graph[k][vertex[i]];	//dodaje do aktualnej wagi drogi wagê kolejnego przejscia
 			k = vertex[i];	//przypisuje zmiennej "k" numer kolejnego wierzcholka
@@ -89,6 +90,96 @@ hamilton Graph::bruteForce(int startVert)
 
 
 	return result;	//zwracam strukturê, która przechowuje drogê o najni¿szym koszcie oraz ten¿e koszt
+}
+
+hamilton Graph::branchAndBound(int startVert)
+{
+	hamilton result;	//tworze obiekt struktury, do przechowywania wynikow
+
+	//----------------TWORZE GRAF POMOCNICZY------------//
+	short int **tempGraph = new short int *[vertices];
+	for (int i = 0; i < vertices; i++)
+		tempGraph[i] = new short int[vertices];
+	//----------------TWORZE GRAF POMOCNICZY------------//
+
+
+	for (int i = 0; i < vertices; i++)
+		for (int j = 0; j < vertices; j++)
+		{
+			if (i == j)
+				tempGraph[i][j] = SHRT_MAX;			//przypisuje wartosci maksymalne na przekatnej macierzy sasiedztwa
+			else
+				tempGraph[i][j] = graph[i][j];		//"klonowanie" macierzy sasiedztwa do tymczaseowej macierzy
+		}
+
+	//-------------------------------------MINIMALIZACJA DRÓG--------------------------------//
+
+	int reduction = 0;		//zmienna przechowujaca wartosc redukcji
+
+							//--------------WIERSZE------------------//
+	for (int i = 0; i < vertices; i++)		//przechodzenie po wszystkich wierszach
+	{
+		short minValue = SHRT_MAX;			//poczatkowa wartosc minimalna jest rowna maksymalnej wartosci "short int"
+		for (int j = 0; j < vertices; j++)			//przechodzenie po wszystkich kolumnach
+			if (i != j)			//mijanie przekatnej macierzy
+			{
+				if (tempGraph[i][j] == 0)		//jesli któraœ komórka jest równa 0, to warunek spe³niony, mo¿na zrezygnowaæ z dalszego sprawdzania
+				{
+					minValue = 0;		//ustawienie minimalnej wartosci na 0
+					break;				//porzucenie dalszego sprawdzania
+				}
+				minValue = min(minValue, tempGraph[i][j]);		//sprawdzanie, czy jest to wartosc mniejsza od aktualnej minimalnej i ewentualna zamiana
+			}
+		for (int j = 0; j < vertices; j++)		//przechodzenie po wrzystkich kolumnach
+			if (i != j)			//mijanie przekatnej macierzy
+				tempGraph[i][j] -= minValue;	//zmniejszanie kazdej wartosci w wierszu o jego wartosc minimaln¹
+		reduction += minValue;
+	}
+							//--------------WIERSZE------------------//
+
+
+							//--------------KOLUMNY------------------//
+	for (int i = 0; i < vertices; i++)		//iteracja po kolumnach
+	{
+		short minValue = SHRT_MAX;			//poczatkowa wartosc minimalna jest rowna maksymalnej wartosci "short int"
+		for (int j = 0; j < vertices; j++)		//iteracja po wierszach
+			if (i != j)				//mijanie przekatnej macierzy
+			{
+				if (tempGraph[j][i] == 0)		//jesli któraœ komórka jest równa 0, to warunek spe³niony, mo¿na zrezygnowaæ z dalszego sprawdzania
+				{
+					minValue = 0;		//ustawienie minimalnej wartosci na 0
+					break;				//porzucenie dalszego sprawdzania
+				}
+				minValue = min(minValue, tempGraph[j][i]);		//sprawdzanie, czy jest to wartosc mniejsza od aktualnej minimalnej i ewentualna zamiana
+			}
+
+		for (int j = 0; j < vertices; j++)		//przechodzenie po wrzystkich wierszach
+			if (i != j)			//mijanie przekatnej macierzy
+				tempGraph[j][i] -= minValue;	//zmniejszanie kazdej wartosci w wierszu o jego wartosc minimaln¹
+		reduction += minValue;
+	}
+							//--------------KOLUMNY------------------//
+
+
+//------------------------------------------MINIMALIZACJA DRÓG-----------------------------------//
+
+	cout << endl;
+	for (int i = 0; i < vertices; i++)
+	{
+		cout << endl;
+		for (int j = 0; j < vertices; j++)
+			cout << tempGraph[i][j] << "\t";
+	}
+
+	cout << "redukcja = " << reduction;
+	cin.get();
+	cin.get();
+
+
+
+
+
+	return result;	//zwracam obiekt z wynikami (kosztem œcie¿ki i sam¹ œcie¿k¹)
 }
 
 void Graph::clear()
@@ -147,7 +238,7 @@ void Graph::display()
 
 void Graph::displayHamilton(hamilton result)
 {
-	if(vertices != 0)	//sprawdzenie czy graf nie jest pusty
+	if (vertices != 0)	//sprawdzenie czy graf nie jest pusty
 	{
 		cout << "Minimalny koszt hamiltona dla grafu to :" << endl;
 		for (int i = 0; i < result.path.size(); i++)
@@ -167,10 +258,6 @@ int Graph::getVertices()
 	return vertices;
 }
 
-int Graph::setVertices(int vert)
-{
-	vertices = vert;
-}
 
 
 //do B&B wziac sobie najlepiej best first albo wg³¹b przeszukiwanie grafu

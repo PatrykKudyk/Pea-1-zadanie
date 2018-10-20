@@ -23,7 +23,7 @@ void Menu::mainMenu()
 		cout << "[1] Wczytaj dane z pliku." << endl
 			<< "[2] Wyswietl dane." << endl
 			<< "[3] Znalezc najkrotszy cykl metoda BruteForce." << endl
-			<< "[4] " << endl
+			<< "[4] Znalezc najkrotszy cykl metoda Branch&Bound" << endl
 			<< "[5] " << endl
 			<< "[6] Wyjdz z programu." << endl;
 		cin >> choise;
@@ -45,11 +45,21 @@ void Menu::mainMenu()
 			break;
 		case 3:
 			system("cls");
-			graph.displayHamilton(graph.bruteForce(getNumber()));
+			if (graph.getVertices() != 0)
+				graph.displayHamilton(graph.bruteForce(getNumber()));
+			else
+				cout << "Graf jest pusty, nie mozna przeprowadzic wybranej operacji!" << endl;
 			cin.get();
 			cin.get();
 			break;
 		case 4:
+			system("cls");
+			if (graph.getVertices() != 0)
+				graph.displayHamilton(graph.branchAndBound(getNumber()));
+			else
+				cout << "Graf jest pusty, nie mozna przeprowadzic wybranej oepracji!" << endl;
+			cin.get();
+			cin.get();
 			break;
 		case 5:
 			break;
@@ -81,9 +91,9 @@ int Menu::getNumber()
 	switch(choise)
 	{
 	case 1:
-		return getNumber(graph.getVerticle());
+		return getNumber(graph.getVertices());
 	case 2:
-		return (rand() % graph.getVerticle());
+		return (rand() % graph.getVertices());
 	default:
 		break;
 	}

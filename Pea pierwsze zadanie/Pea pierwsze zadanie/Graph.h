@@ -16,10 +16,11 @@ public:
 	~Graph();
 	void createGiven(std::string name);
 	hamilton bruteForce(int startVert);
+	hamilton branchAndBound(int startVert);
 	void clear();
 	void graphReset();
 	void display();
 	void displayHamilton(hamilton result);
-	int getVerticle(); //pobiera ilosc wierzcholkow
+	int getVertices(); //pobiera ilosc wierzcholkow
 };
 
