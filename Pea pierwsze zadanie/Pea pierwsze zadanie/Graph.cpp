@@ -163,23 +163,36 @@ hamilton Graph::branchAndBound(int startVert)
 
 //------------------------------------------MINIMALIZACJA DRÓG-----------------------------------//
 
-	cout << endl;
+	bool *visited = new bool[vertices];
 	for (int i = 0; i < vertices; i++)
-	{
-		cout << endl;
-		for (int j = 0; j < vertices; j++)
-			cout << tempGraph[i][j] << "\t";
-	}
-
-	cout << "redukcja = " << reduction;
-	cin.get();
-	cin.get();
+		visited = false;
+	visited[startVert] = true;
 
 
 
 
+
+	//-----------------USUWANIE OBIEKTÓW--------------------//
+	delete[] visited;
+	for (int i = 0; i < vertices; i++)
+		delete[] tempGraph[i];
+	delete[] tempGraph;
+	//-----------------USUWANIE OBIEKTÓW--------------------//
 
 	return result;	//zwracam obiekt z wynikami (kosztem œcie¿ki i sam¹ œcie¿k¹)
+}
+
+short** Graph::copyGraph(int** graph, int size)
+{
+	short int **newGraph = new short int*[size];
+	for (int i = 0; i < size; i++)
+		newGraph[i] = new short int[size];
+
+	for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+			newGraph[i][j] = graph[i][j];
+
+	return newGraph;
 }
 
 void Graph::clear()
@@ -262,3 +275,19 @@ int Graph::getVertices()
 
 //do B&B wziac sobie najlepiej best first albo wg³¹b przeszukiwanie grafu
 
+
+
+
+/*
+cout << endl;
+for (int i = 0; i < vertices; i++)
+{
+cout << endl;
+for (int j = 0; j < vertices; j++)
+cout << tempGraph[i][j] << "\t";
+}
+
+cout << "redukcja = " << reduction;
+cin.get();
+cin.get();
+*/

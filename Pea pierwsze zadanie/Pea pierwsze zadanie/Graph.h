@@ -7,6 +7,20 @@ struct hamilton	//tworze strukture do przechowywania wynikow algorytmów (œcie¿ka
 	int pathCost;	//zmienna, ktora przechowuje najnizszy koszt
 };
 
+struct check
+{
+	short int **graph;
+	int reduction;
+};
+
+struct bAndB
+{
+	int vertexNumber;
+	check data;
+};
+
+
+
 class Graph
 {
 	int vertices; // ilosc wierzcholkow grafu
@@ -17,6 +31,8 @@ public:
 	void createGiven(std::string name);
 	hamilton bruteForce(int startVert);
 	hamilton branchAndBound(int startVert);
+	short int** copyGraph(int**graph, int size);
+	check reducing(short int** graph, int startVert, int endVert);
 	void clear();
 	void graphReset();
 	void display();
