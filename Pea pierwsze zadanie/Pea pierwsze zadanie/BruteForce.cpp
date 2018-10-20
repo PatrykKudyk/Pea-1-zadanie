@@ -2,7 +2,6 @@
 #include <vector>
 #include <algorithm>
 
-using namespace std;
 
 
 BruteForce::BruteForce()
@@ -16,8 +15,8 @@ BruteForce::~BruteForce()
 void BruteForce::calculatingPath(int startVert)
 {
 	pathCost = INT_MAX;	//ustawiam minimalny koszt przejscia na maksymalny, ktory jest dostepny w int'cie tak, aby potem mozna bylo znaleŸæ najkrotszy przez porównywanie
-	vector<int> vertex; //tworze vektor intów o nazwie vertex, w ktorym bêdê przechowywa³ wszystkie wierzcholki poza startowym
-	vector<int> path;	//tworze vektor intow o nazwie path, do przechowywania kolejnych wierzcholkow dla chwilowej sciezki
+	std::vector<int> vertex; //tworze vektor intów o nazwie vertex, w ktorym bêdê przechowywa³ wszystkie wierzcholki poza startowym
+	std::vector<int> path;	//tworze vektor intow o nazwie path, do przechowywania kolejnych wierzcholkow dla chwilowej sciezki
 	for (int i = 0; i < graph.getVertices(); i++)
 		if (i != startVert)
 			vertex.push_back(i);	//wrzucam do wektora wszystkie wierzcholki poza startowym, ¿eby unikn¹æ pêtli
@@ -46,7 +45,7 @@ void BruteForce::calculatingPath(int startVert)
 	} while (next_permutation(vertex.begin(), vertex.end()));	//pêtla, która koñczy siê dopiero po sprawdzeniu wszystkich mo¿liwych permutacji dróg
 }
 
-vector<int> BruteForce::getPath()
+std::vector<int> BruteForce::getPath()
 {
 	return path;
 }

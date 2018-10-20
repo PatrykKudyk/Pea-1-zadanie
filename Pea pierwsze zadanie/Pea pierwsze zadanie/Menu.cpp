@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "BruteForce.h"
+#include "BranchAndBound.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ void Menu::mainMenu()
 	bool progWork = true;	//zmienna logiczna, ktora odpowiada za dzialanie badz wylaczenie programu
 	int choise;	//numer, ktory wprowadza uzytkownik w momencie wyboru
 	BruteForce brute;
+	BranchAndBound branch;
 	do {
 		system("cls");
 		cout << "[1] Wczytaj dane z pliku." << endl
@@ -61,12 +63,16 @@ void Menu::mainMenu()
 			break;
 		case 4:
 			system("cls");
-	/*	if (graph.getVertices() != 0)
-				displayHamilton(graph.branchAndBound(getNumber()));
+			if (graph.getVertices() != 0)
+			{
+				branch.setGraph(graph);
+				branch.calculatingPath(getNumber());
+				displayHamilton(branch.getPathCost(), branch.getPath());
+			}
 			else
 				cout << "Graf jest pusty, nie mozna przeprowadzic wybranej oepracji!" << endl;
 			cin.get();
-			cin.get();*/
+			cin.get();
 			break;
 		case 5:
 			break;
@@ -95,7 +101,7 @@ int Menu::getNumber()
 		<< "[1] Z wybranego." << endl
 		<< "[2] Z losowego." << endl;
 	cin >> choise;
-	switch(choise)
+	switch (choise)
 	{
 	case 1:
 		return getNumber(graph.getVertices());
