@@ -4,18 +4,18 @@
 
 
 
-struct bAndB
+struct bAndB		//struktura przechowujaca wyniki redukcji oraz umozliwiajaca sprawne przeprowadzenie algorytmu
 {
-	int vertexNumber;
-	short int **graph;
-	int reduction;
-	bool *visited;
-	std::vector<int> path;
+	int vertexNumber;		//numer aktualnie sprawdzanego wierzcholka
+	short int **graph;		//graf przechowywany w danej chwili
+	int reduction;			//chwilowy koszt przejscia do danego wierzcholka po wczesniejszej sciezce
+	bool *visited;			//tablica przechowujaca liste odwiedzonych wierzcholkow
+	std::vector<int> path;	//wektor przechowujacy kolejne wierzcholki w drodze
 };
 
 class BranchAndBound
 {
-	Graph graph;
+	Graph graph;		//graf oraz jego wielkosc (czyli liczba wierzcholkow)
 	std::vector<int> path;	//vector, który przechowuje kolejne wierzcholki po ktorych przechodzi algorytm
 	int pathCost;	//zmienna, ktora przechowuje najnizszy koszt
 
