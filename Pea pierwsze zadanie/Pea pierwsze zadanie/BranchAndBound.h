@@ -27,7 +27,7 @@ public:
 	bAndB matrixStartReduction(short** graph, int verticles, int startVert);
 	short int** copyGraph(short**graph, int size);
 	bool* copyVisited(bool*visited, int size);
-	bAndB reducing(bAndB given, int startVert, int endVert, bAndB firstReduction);
+	bAndB reducing(bAndB given, int startVert, int endVert, int firstVertex);
 	bool isVisitedLeft(bool* visited, int size);
 	std::vector<int> getPath();
 	void setPath(std::vector<int> gPath);

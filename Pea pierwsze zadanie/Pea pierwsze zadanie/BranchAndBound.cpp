@@ -1,7 +1,7 @@
 #include "BranchAndBound.h"
 #include <vector>
 #include <algorithm>
-
+#include <iostream>
 
 BranchAndBound::BranchAndBound()
 {
@@ -25,7 +25,7 @@ void BranchAndBound::calculatingPath(int startVert)
 		for (int i = 0; i < graph.getVertices(); i++)	//iteruje po wszystkich wierzcho³kach
 			if (!temp.visited[i])		//sprawdzam, czy wierzcholek byl juz odwiedzony wczesniej
 			{
-				bAndB temp2 = reducing(temp, temp.vertexNumber, i, firstReduction);		//tworze druga zmienna pomocnicza i przetwarzam j¹ funkcj¹ obliczaj¹c¹ redukcje
+				bAndB temp2 = reducing(temp, temp.vertexNumber, i, startVert);		//tworze druga zmienna pomocnicza i przetwarzam j¹ funkcj¹ obliczaj¹c¹ redukcje
 				vector.push_back(temp2);	//dodaje strukture do wektora
 			}
 		//-------ZNALEZIENIE NAJMNIEJSZEGO-------//
@@ -146,7 +146,7 @@ bool* BranchAndBound::copyVisited(bool* visited, int size)
 	return newVisited;
 }
 
-bAndB BranchAndBound::reducing(bAndB given, int startVert, int endVert, bAndB firstReduction)
+bAndB BranchAndBound::reducing(bAndB given, int startVert, int endVert, int firstVertex)
 {
 	bAndB result;		//tworze strukture z wynikami
 	result.reduction = 0;		//ustawiam redukcje na 0
@@ -162,7 +162,7 @@ bAndB BranchAndBound::reducing(bAndB given, int startVert, int endVert, bAndB fi
 		result.graph[startVert][i] = SHRT_MAX;		//ustawiam wartoœci w wierszu wierzcholka z ktorego przechodze na nieskonczonosc
 		result.graph[i][endVert] = SHRT_MAX;		//ustawiam wartosci w kolumnie wierzcholka do ktorego przechodze na nieskonczonosc
 	}
-	result.graph[endVert][startVert] = SHRT_MAX;	//ustawiam nieskonczonosc w komorce odpowiadajacej przejsciu z (wierzcholka do ktorego przechodze) do (wierzcholka od ktorego wychodze)
+	result.graph[endVert][firstVertex] = SHRT_MAX;	//ustawiam nieskonczonosc w komorce odpowiadajacej przejsciu z (wierzcholka do ktorego przechodze) do (wierzcholka startowego)
 
 	//--------------WIERSZE------------------//
 	for (int i = 0; i < graph.getVertices(); i++)		//przechodzenie po wszystkich wierszach

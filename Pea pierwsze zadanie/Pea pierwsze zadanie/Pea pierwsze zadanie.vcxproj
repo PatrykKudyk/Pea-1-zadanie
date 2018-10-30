@@ -116,12 +116,14 @@
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="TimeMeasure.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BranchAndBound.h" />
     <ClInclude Include="BruteForce.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="TimeMeasure.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
