@@ -1,14 +1,14 @@
 #include <iostream>
 #include "Menu.h"
 #include <ctime>
-#include "BranchAndBound.h"
+/*#include "BranchAndBound.h"
 #include "BruteForce.h"
 #include <fstream>
 #include "TimeMeasure.h"
 #include <vector>
 
 using namespace std;
-
+*/
 //void generacjaDanych(int N);
 
 int main()
